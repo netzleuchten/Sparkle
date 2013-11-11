@@ -23,7 +23,7 @@ You just have to fire the emitter on your draw cycles.
 
 Sparkle is just giving you tools to handle the rendering of your particles. Modify the new instance or modify SparkleEmitter itself to create the particle effect you need. The following examples will help you to understand how simple modifing a Sparkle instance is. 
 
-#### Duration ([example_1.html](exmaples/example_1.html))
+#### Duration ([example_1.html](examples/example_1.html))
 
 Let's start with an example for a particle burst with a lenght of 1 second. In the draw cycle we will check if we stell need to fire the emitter, else we delete it to save memory:
 
@@ -67,7 +67,7 @@ Only if rendering and creating particles has stopped, `isAlive` will turn `false
 	
 
 	
-#### Render your own particles ([example_2.html](exmaples/example_2.html))
+#### Render your own particles ([example_2.html](examples/example_2.html))
 
 Lets extend the example above with our own particles:
 
@@ -119,6 +119,6 @@ If you want to implement collision detection, special movements, more accurate g
 
 ### Some examples
 
-* Modifying the angle, particle size and add gravity: ([simple.html](exmaples/simple.html))
-* Moving an emitter on the canvas: ([walking.html](exmaples/walking.html))
-* Handling multiple Emitter, modifing them individually and killing them: ([fireworks.html](exmaples/fireworks.html))
+* Modifying the angle, particle size and add gravity: ([simple.html](examples/simple.html))
+* Moving an emitter on the canvas: ([walking.html](examples/walking.html))
+* Handling multiple Emitter, modifing them individually and killing them: ([fireworks.html](examples/fireworks.html))
