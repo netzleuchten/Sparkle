@@ -3,7 +3,6 @@
 	<head>
 		<title></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<script src="js/libs/jquery-1.9.0/jquery.min.js" type="text/javascript"></script>
 		<script src="../src/sparkle.js" type="text/javascript"></script>
 		<script src="js/requestAnimationFrame.js" type="text/javascript"></script>
 		<script src="js/stats.min.js" type="text/javascript"></script>
@@ -12,14 +11,15 @@
 
 	<body style="color:white;background:#000;margin:0;padding:0;">
 
+		<p style="text-align:center"><small>Click to fire</small></p>
 		<canvas id="canvasDemo" width="1024" height="550"></canvas>
 
 		<script type="text/javascript">
-			
+
 			var stats = new Stats();
-			stats.setMode( 1 );
-			document.body.appendChild( stats.domElement );
-			
+			stats.setMode(1);
+			document.body.appendChild(stats.domElement);
+
 			// http://ejohn.org/blog/javascript-array-remove/
 			Array.prototype.remove = function(from, to) {
 				var rest = this.slice((to || from) + 1 || this.length);
@@ -27,101 +27,95 @@
 				return this.push.apply(this, rest);
 			};
 
-			// we wait until the page has loaded
-			$(function() {
+			//some global array
 
-				//some global array
+			var canvas = document.getElementById('canvasDemo'),
+				context = canvas.getContext('2d'),
+				start = Date.now(),
+				frame = 0,
+				emitters = new Array,
+				flares = new Array;
 
-				var canvas = $('#canvasDemo')[0],
-						context = canvas.getContext('2d'),
-						start = Date.now(),
-						frame = 0,
-						emitters = new Array,
-						flares = new Array;
-				
-				$(['flare','flare_blue','flare_green','flare_purple','flare_red']).each(function(i,flare) {
-					var image = new Image();
-					image.src = 'gfx/'+flare+'.png';
-					flares.push(image);
-				});
-
-				// create a new emitter on click at click position and push
-				// it to the array of emitters
-				$(canvas).mousedown(function(event) {
-					
-					var x = event.clientX;
-					var y = event.clientY;
-
-					x -= canvas.offsetLeft;
-					y -= canvas.offsetTop;
-
-					var newEmitter = new SparkleEmitter(canvas);
-
-					newEmitter.setPosition({x: x, y: y});
-					newEmitter.setFireDuration(0.1);
-					newEmitter.setGravity(10);
-					newEmitter.setParticlesPerSecond(500);
-					newEmitter.initialParticleLifetime = function() {
-						return 1;
-					};
-					
-					newEmitter.initialParticleSize = function() {
-						return this.randomBetween(25, 35);
-					};
-					newEmitter.initialParticleSpeed = function() {
-						return this.randomBetween(200, 250);
-					};
-					newEmitter.initialParticleAngle = function() {
-						return this.randomBetween(0, 360);
-					};
-					
-					var rand = Math.floor(SparkleEmitter.prototype.randomBetween(0,4));
-					var flare = flares[rand];
-					
-					newEmitter.drawParticle = function(x,y,particle) {
-						
-						this.context.globalAlpha = particle.opacity;
-						this.context.globalCompositeOperation = 'lighter';
-
-						this.context.drawImage(
-								flare,
-								x,
-								y,
-								particle.size,
-								particle.size
-								);
-
-						return this;
-					};
-					
-					emitters.push(newEmitter);
-				});
-
-				function draw() {
-					stats.begin();
-					context.clearRect(0, 0, canvas.width, canvas.height);
-
-					// fire each emitter we just created
-					$(emitters).each(function(id, emitter) {
-						if (emitter.isAlive > 0) {
-							emitter.fire();
-						} else {
-							emitters.remove(id);
-						}
-						
-					});
-					stats.end();
-				}
-				
-				startAnimation();
-				
-				function startAnimation() {
-					requestAnimationFrame(startAnimation,canvas);
-					draw();
-				}
-
+			$(['flare', 'flare_blue', 'flare_green', 'flare_purple', 'flare_red']).each(function(i, flare) {
+				var image = new Image();
+				image.src = 'gfx/' + flare + '.png';
+				flares.push(image);
 			});
 
+			// create a new emitter on click at click position and push
+			// it to the array of emitters
+			$(canvas).mousedown(function(event) {
+
+				var x = event.clientX;
+				var y = event.clientY;
+
+				x -= canvas.offsetLeft;
+				y -= canvas.offsetTop;
+
+				var newEmitter = new SparkleEmitter(canvas);
+
+				newEmitter.setPosition({x: x, y: y});
+				newEmitter.setFireDuration(0.1);
+				newEmitter.setGravity(10);
+				newEmitter.setParticlesPerSecond(500);
+				newEmitter.initialParticleLifetime = function() {
+					return 1;
+				};
+
+				newEmitter.initialParticleSize = function() {
+					return this.randomBetween(25, 35);
+				};
+				newEmitter.initialParticleSpeed = function() {
+					return this.randomBetween(200, 250);
+				};
+				newEmitter.initialParticleAngle = function() {
+					return this.randomBetween(0, 360);
+				};
+
+				var rand = Math.floor(SparkleEmitter.prototype.randomBetween(0, 4));
+				var flare = flares[rand];
+
+				newEmitter.drawParticle = function(x, y, particle) {
+
+					this.context.globalAlpha = particle.opacity;
+					this.context.globalCompositeOperation = 'lighter';
+
+					this.context.drawImage(
+							flare,
+							x,
+							y,
+							particle.size,
+							particle.size
+							);
+
+					return this;
+				};
+
+				emitters.push(newEmitter);
+			});
+
+			function draw() {
+				stats.begin();
+				context.clearRect(0, 0, canvas.width, canvas.height);
+
+				// fire each emitter we just created
+				$(emitters).each(function(id, emitter) {
+					if (emitter.isAlive > 0) {
+						emitter.fire();
+					} else {
+						emitters.remove(id);
+					}
+
+				});
+				stats.end();
+			}
+
+			function startAnimation() {
+				requestAnimationFrame(startAnimation, canvas);
+				draw();
+			}
+			
+			startAnimation();
 
 		</script>
 	</body>
