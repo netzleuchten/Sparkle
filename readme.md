@@ -13,7 +13,7 @@ Create a new emitter:
 	var canvas = document.getElementById('myCanvas');
 	var emitter = new SparklesEmitter(canvas);
 	
-Yay! That's it. You Emitter is ready to draw particles on your canvas. How? Like this:
+Yay! That's it. You emitter is ready to draw particles on your canvas. How? Like this:
 	
 	emitter.fire();
 	
@@ -125,4 +125,4 @@ If you want to implement collision detection, special movements, more accurate g
 
 * Modifying the angle, particle size and add gravity: [Source](examples/simple.html) / [Run](https://rawgithub.com/netzleuchten/Sparkle/master/examples/simple.html)
 * Moving an emitter on the canvas: [Source](examples/walking.html) / [Run](https://rawgithub.com/netzleuchten/Sparkle/master/examples/walking.html)
-* Handling multiple Emitter, modifing them individually and killing them: [Source](examples/fireworks.html)  / [Run](https://rawgithub.com/netzleuchten/Sparkle/master/examples/fireworks.html)
+* Handling multiple emitter, modifing them individually and killing them: [Source](examples/fireworks.html)  / [Run](https://rawgithub.com/netzleuchten/Sparkle/master/examples/fireworks.html)
