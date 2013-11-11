@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="js/libs/jquery-1.9.0/jquery.min.js" type="text/javascript"></script>
+		<script src="../src/sparkle.js" type="text/javascript"></script>
+		<script src="js/requestAnimationFrame.js" type="text/javascript"></script>
+		<script src="js/stats.min.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body style="color:white;background:#000;margin:0;padding:0;">
+		
+		<canvas id="canvasDemo" width="1024" height="550"></canvas>
+		
+		<script type="text/javascript">
+			
+			var stats = new Stats();
+			stats.setMode( 1 );
+			document.body.appendChild( stats.domElement );
+			
+			$(function() {
+				var canvas = $('#canvasDemo')[0],
+					context = canvas.getContext('2d');
+				
+				// STEP1: Create a new emitter and show him the right canvas
+				var emitter1 = new SparkleEmitter(canvas);
+				
+				// STEP2: Set a position, gravity (default is 0) and how many
+				//		  particles per second it should pour out
+				emitter1.setPosition({
+					x: canvas.width/2, // center the emitter on the canvas
+					y: canvas.height-(canvas.height/3) // place it in the lower third of the canvas
+				});
+				emitter1.setGravity(2);
+				emitter1.setParticlesPerSecond(50);
+				
+				// STEP3: Customize the behavior
+				//		  You'll find "initialParticle..." functions 
+				//		  Here you can tell the emitter to assign individual
+				//		  behavoir for each created particle. Like the angle:
+				emitter1.initialParticleAngle = function() {
+					return this.randomBetween(-45,-135);
+				};
+				//	     Or the size:
+				emitter1.initialParticleSize = function() {
+					return this.randomBetween(1,20);
+				};
+				
+				// Look thorugh the sourcecode to see all functions you can
+				// use to modifiy the emitter... some examples are:
+				// drawParticle(x,y,particle)
+				// applyParticleVelocity(particle)
+				// initialParticleLifetime()
+				// etc ...
+
+				function draw() {
+					stats.begin();
+					
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					
+					// STEP 4: Fire the emitter with each draw-cycle
+					//		   Take a look at "fireworks.html" or "walking.html"
+					//		   for more inspiration on how to use the particle system
+					emitter1.fire();
+					
+					stats.end();
+				}
+
+				function startAnimation() {
+					requestAnimationFrame(startAnimation,canvas);		
+					draw();
+				}
+				
+				startAnimation();
+
+			});
+
+
+		</script>
+	</body>
+</html>

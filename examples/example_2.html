@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="../src/sparkle.js" type="text/javascript"></script>
+		<script src="js/requestAnimationFrame.js" type="text/javascript"></script>
+	</head>
+
+	<body style="color:white;background:#000;margin:0;padding:0;">
+
+		<canvas id="myCanvas" width="1024" height="550"></canvas>
+
+		<script type="text/javascript">
+
+			var canvas = document.getElementById('myCanvas');
+			var context = canvas.getContext('2d');
+			var emitter = new SparkleEmitter(canvas);
+
+			emitter.setFireDuration(5);
+			emitter.setParticlesPerSecond(50);
+
+			emitter.drawParticle = function(x, y, particle) {
+
+				this.context.globalAlpha = particle.opacity;
+				this.context.globalCompositeOperation = 'lighter';
+
+				var halfSize = particle.size/2;
+
+				this.context.beginPath();
+				this.context.rect(
+					x-halfSize,
+					y-halfSize,
+					particle.size,
+					particle.size
+				);
+
+				this.context.fillStyle = '#99f';
+				this.context.fill();
+
+				return this;
+			};
+
+			function draw() {
+
+				context.clearRect(0, 0, canvas.width, canvas.height);
+
+				if (emitter.isAlive) {
+					requestAnimationFrame(draw, canvas);
+					emitter.fire();
+				} else {
+					alert('nothing more to do for our emitter. removing.');
+					delete emitter;
+				}
+
+			}
+
+			draw();
+
+
+
+		</script>
+	</body>
+</html>
