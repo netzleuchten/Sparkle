@@ -34,17 +34,18 @@
 				start = Date.now(),
 				frame = 0,
 				emitters = new Array,
-				flares = new Array;
-
-			$(['flare', 'flare_blue', 'flare_green', 'flare_purple', 'flare_red']).each(function(i, flare) {
+				flares = new Array,
+				flareImages = ['flare', 'flare_blue', 'flare_green', 'flare_purple', 'flare_red'];
+			
+			for(i = 0;i < flareImages.length;i++) {
 				var image = new Image();
-				image.src = 'gfx/' + flare + '.png';
+				image.src = 'gfx/' + flareImages[i] + '.png';
 				flares.push(image);
-			});
+			}
 
 			// create a new emitter on click at click position and push
 			// it to the array of emitters
-			$(canvas).mousedown(function(event) {
+			canvas.onclick = function(event) {
 
 				var x = event.clientX;
 				var y = event.clientY;
@@ -92,21 +93,24 @@
 				};
 
 				emitters.push(newEmitter);
-			});
+			};
 
 			function draw() {
 				stats.begin();
 				context.clearRect(0, 0, canvas.width, canvas.height);
 
 				// fire each emitter we just created
-				$(emitters).each(function(id, emitter) {
+				for(i = 0;i < emitters.length;i++) {
+					
+					var emitter = emitters[i];
+				
 					if (emitter.isAlive > 0) {
 						emitter.fire();
 					} else {
-						emitters.remove(id);
+						emitters.remove(i);
 					}
 
-				});
+				}
 				stats.end();
 			}
 
