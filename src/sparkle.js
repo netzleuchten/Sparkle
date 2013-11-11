@@ -63,10 +63,13 @@
 	SparkleEmitter.prototype.deltaSecond = 0;
 	
 	SparkleEmitter.prototype.getTime = function() {
-		return window.performance.now ?
-			// Some browsers use high-precision timers
-			(performance.now() + performance.timing.navigationStart) : 
-			Date.now(); // A fallback for those that don't
+		
+		if(window.performance && window.performance.now) {
+			return performance.now() + performance.timing.navigationStart;
+		}else{
+			return Date.now();
+		}
+
 	};
 	
 	SparkleEmitter.prototype.setParticlesPerSecond = function(count) {
