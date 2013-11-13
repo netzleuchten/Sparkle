@@ -13,7 +13,7 @@ Create a new emitter:
 	var canvas = document.getElementById('myCanvas');
 	var emitter = new SparklesEmitter(canvas);
 	
-Yay! That's it. You emitter is ready to draw particles on your canvas. How? Like this:
+Yay! That's it. Your emitter is ready to draw particles on your canvas. How? Like this:
 	
 	emitter.fire();
 	
@@ -21,13 +21,13 @@ You just have to fire the emitter on your draw cycles.
 
 ### Examples
 
-Sparkle is just giving you tools to handle the rendering of your particles. Modify the new instance or modify SparkleEmitter itself to create the particle effect you need. The following examples will help you to understand how simple modifing a Sparkle instance is. 
+Sparkle is just giving you tools to handle the rendering of your particles. Modify the new instance or modify SparkleEmitter itself to create the particle effect you need. The following examples will help you to understand how simple modifying a Sparkle instance is.
 
 #### Duration ([example_1.html](examples/example_1.html))
 
 [Click here to run](https://rawgithub.com/netzleuchten/Sparkle/master/examples/example_1.html)
 
-Let's start with an example for a particle burst with a lenght of 1 second. In the draw cycle we will check if we stell need to fire the emitter, else we delete it to save memory:
+Let's start with an example for a particle burst with a lenght of 1 second. In the draw cycle we will check if we still need to fire the emitter, else we delete it to save memory:
 
 	
 	var canvas = document.getElementById('myCanvas');
