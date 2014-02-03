@@ -25,12 +25,10 @@
 				this.context.globalAlpha = particle.opacity;
 				this.context.globalCompositeOperation = 'lighter';
 
-				var halfSize = particle.size/2;
-
 				this.context.beginPath();
 				this.context.rect(
-					x-halfSize,
-					y-halfSize,
+					x,
+					y,
 					particle.size,
 					particle.size
 				);

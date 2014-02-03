@@ -57,7 +57,7 @@
 
 				newEmitter.setPosition({x: x, y: y});
 				newEmitter.setFireDuration(0.1);
-				newEmitter.setGravity(10);
+				newEmitter.setGravity(500);
 				newEmitter.setParticlesPerSecond(500);
 				newEmitter.initialParticleLifetime = function() {
 					return 1;
@@ -65,14 +65,17 @@
 
 				newEmitter.initialParticleSize = function() {
 					return this.randomBetween(25, 35);
-				};
+				}; // same as newEmitter.setParticleSize(25,35)
+				
 				newEmitter.initialParticleSpeed = function() {
 					return this.randomBetween(200, 250);
-				};
-				newEmitter.initialParticleAngle = function() {
+				}; // same as newEmitter.setParticleSpeed(200,250)
+				
+				newEmitter.initialParticleDirection = function() {
 					return this.randomBetween(0, 360);
-				};
-
+				}; // same as newEmitter.setRadius(360);
+				
+				// Radomize firework color
 				var rand = Math.floor(SparkleEmitter.prototype.randomBetween(0, 4));
 				var flare = flares[rand];
 

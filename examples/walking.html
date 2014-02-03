@@ -25,13 +25,10 @@
 			var emitter1 = new SparkleEmitter(canvas);
 
 			emitter1.setPosition({x: 0, y: 500});
-			emitter1.setParticlesPerSecond(100);
-			emitter1.initialParticleSize = function() {
-				return this.randomBetween(5, 10);
-			};
-			emitter1.initialParticleLifetime = function() {
-				return this.randomBetween(1, 1.5);
-			};
+			emitter1.setParticlesPerSecond(20);
+			emitter1.setParticleSize(5,10);
+			emitter1.setParticleLifetime(1.5,2.5);
+			emitter1.setParticleSpeed(60);
 
 			function draw() {
 

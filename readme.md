@@ -80,12 +80,10 @@ Lets extend the example above with our own particles:
 		this.context.globalAlpha = particle.opacity;
 		this.context.globalCompositeOperation = 'lighter';
 
-		var halfSize = particle.size/2;
-
 		this.context.beginPath();
 		this.context.rect(
-			x-halfSize,
-			y-halfSize,
+			x,
+			y,
 			particle.size,
 			particle.size
 		);
@@ -96,22 +94,47 @@ Lets extend the example above with our own particles:
 		return this;
 	};
 	
-You can draw whatever you want in here. The function `drawParticle` always gets centered x and y values, based on the particle size. Also you can acces the particle attributes itself.
+You can draw whatever you want in here. The function `drawParticle` always gets centered x and y values, based on the particle size. Also you can access the particle attributes itself.
 
 To get a more detailed control on saving and restoring the context, fading particles etc. you can overwrite `renderParticle(particle)` wich calls `drawParticle()`
 
+### Emitter behavior
+
+The emitter is the main object wich pours out your particles. Different functions can be used to modify its behavior.
+
+* setPosition(object) - needs and object like {x: 100,y: 200}
+* setDirection(degree)
+* setRadius(degree)
+* setGravity(float)
+
+Call these values before you fire the emitter to position and point the emitter.
+
 ### Particle behavior
 
-On creating a particle (`addParticle()`) Sparkle calls a set of functions to set initial values. You can overwrite them all to modify these value on creation. Most of them use `this.randomBetween(start,end)` to return slightly different values for each particle.
+#### Setting particle attributes
+
+There are diffrent ways to set a particles size, speed and lifetime. The simplest way is to use the setParticle* functions.
+
+* setParticleSize(default,max)
+* setParticleSpeed(default,max)
+* setParticleLifetime(default,max)
+
+The parameter `max` is optional. When setting this parameter you switch from fixed values to random values between `default` and `max`. 
+
+#### Overwriting the initialParticle* functions
+
+On creating a particle (`addParticle()`) Sparkle calls a set of functions to set initial values. You can overwrite them all to modify these value on creation. They decide wether a particle attribute is fixed or is random between two values, defined with one of the setParticle* functions or the emitter behavior.
 
 * initialParticleLifetime()
 * initialParticleSize()
 * initialParticleAngle()
 * initialParticleSpeed()
 
+You are able to overwrite them to add special behavior to your particles based on time or emitter/particle parameters.
+
 #### applyParticleVelocity()
 
-Each particle has a property called `particle.velocity`. The function `applyParticleVelocity()` sets `particle.velocity.x` and `particle.velocity.y`. It  adds the right velocity based on `particle.speed` and `particle.angle`. Usually these are set by `initialParticleSpeed()` and `initialParticleAngle()` and are slightly different for each particle.
+Each particle has a property called `particle.velocity`. The function `applyParticleVelocity()` sets `particle.velocity.x` and `particle.velocity.y`. It  adds the right velocity based on `particle.speed` and `particle.angle`. Usually these are set by `initialParticleSpeed()` and `initialParticleDirection()` and are slightly different for each particle.
 
 By overwriting this function you can modify how the velocity is calculated and manipulate the inital values.
 
@@ -119,7 +142,7 @@ By overwriting this function you can modify how the velocity is calculated and m
 
 `modifyParticle()` is called each time before `renderParticle()`. It moves the particle based on the velocity, applies gravity, checks if the particle is new or dieing and fades it in and out by changeing `particle.opacity`.
 
-If you want to implement collision detection, special movements, more accurate gravity etc. here would be the right place.
+If you want to implement collision detection, special movements (e.g. rotation), more accurate gravity etc. here would be the right place.
 
 ### Some examples
 

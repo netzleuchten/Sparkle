@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="../src/sparkle.js" type="text/javascript"></script>
+		<script src="js/requestAnimationFrame.js" type="text/javascript"></script>
+		<script src="js/stats.min.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body style="color:white;background:#000;margin:0;padding:0;">
+
+		<canvas id="canvasDemo" width="1024" height="550"></canvas>
+
+		<script type="text/javascript">
+
+			var stats = new Stats();
+			stats.setMode(1);
+			document.body.appendChild(stats.domElement);
+			
+			// Go on
+			var canvas = document.getElementById('canvasDemo'),
+				context = canvas.getContext('2d'),
+				emitter = new SparkleEmitter(canvas),
+				sparkle = new Image(),
+				emitterPos = {x:0,y:0},
+				emitterPosOld = {x:0,y:0},
+				emitterDirection = 0;
+			
+			canvas.onmousemove = function(event) {
+								
+				emitterPos = {
+					x: event.clientX - canvas.offsetLeft, 
+					y: event.clientY - canvas.offsetTop
+				};
+				
+			};
+			
+			canvas.onmouseout = function(event) {
+				
+			};
+			
+			// Load the sparkle-sprite
+			sparkle.src = 'gfx/sparkle.png';
+
+			emitter.setPosition({
+				x: canvas.width / 2,
+				y: canvas.height - (canvas.height / 3)
+			});
+			
+			emitter.setSize(70, 70);
+			emitter.setGravity(0);
+			emitter.setParticlesPerSecond(50);
+			emitter.setDirection(0);
+			emitter.setRadius(45);
+			
+			emitter.setParticleLifetime(0.8,1.2);
+			emitter.setParticleSpin(-2,2);
+			emitter.setParticleSize(15,35);
+			emitter.setParticleSpeed(15);
+
+			emitter.drawParticle = function(x, y, particle) {
+
+				this.context.globalAlpha = particle.opacity;
+				this.context.globalCompositeOperation = 'lighter';
+
+				this.context.drawImage(
+						sparkle,
+						x,
+						y,
+						particle.size,
+						particle.size
+						);
+
+				return this;
+			};
+
+			function draw() {
+				
+				stats.begin();
+
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				
+				emitter.setPosition(emitterPos);
+				
+				// calculate direciton in degree
+				var deltaX = emitterPosOld.x-emitterPos.x,
+					deltaY = emitterPosOld.y-emitterPos.y,
+					direction = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+								
+				emitter.setDirection(direction);
+				emitterPosOld = emitterPos;
+				
+				if(deltaX === 0 && deltaY === 0)
+					emitter.setRadius(360);
+				else
+					emitter.setRadius(25);
+				
+				
+				emitter.fire();
+
+				stats.end();
+			}
+
+			function startAnimation() {
+				requestAnimationFrame(startAnimation, canvas);
+				draw();
+			}
+
+			startAnimation();
+
+
+		</script>
+	</body>
+</html>

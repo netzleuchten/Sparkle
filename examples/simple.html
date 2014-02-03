@@ -31,20 +31,20 @@
 				x: canvas.width / 2, // center the emitter on the canvas
 				y: canvas.height - (canvas.height / 3) // place it in the lower third of the canvas
 			});
-			emitter1.setGravity(2);
+			emitter1.setGravity(90);
 			emitter1.setParticlesPerSecond(50);
+			emitter1.setDirection(-90);
+			emitter1.setRadius(25);
 
 			// STEP3: Customize the behavior
 			//		  You'll find "initialParticle..." functions 
 			//		  Here you can tell the emitter to assign individual
-			//		  behavoir for each created particle. Like the angle:
-			emitter1.initialParticleAngle = function() {
-				return this.randomBetween(-45, -135);
-			};
-			//	     Or the size:
+			//		  behavoir for each created particle. Like the size:
 			emitter1.initialParticleSize = function() {
-				return this.randomBetween(1, 20);
+				return this.randomBetween(2, 10);
 			};
+			// overwriting this function is the same like calling
+			// emitter1.setParticleSize(2,10)
 
 			// Look thorugh the sourcecode to see all functions you can
 			// use to modifiy the emitter... some examples are:
@@ -54,6 +54,7 @@
 			// etc ...
 
 			function draw() {
+				
 				stats.begin();
 
 				context.clearRect(0, 0, canvas.width, canvas.height);
