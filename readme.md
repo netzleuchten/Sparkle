@@ -2,7 +2,7 @@
 
 ## What is Sparkle?
 
-Sparkel is particle rendering boilerplate, written in JavaScript to draw particles on a canvas object. It provides general handling for particles and particle behavior you can extend and modify by overwriting certain functions.
+Sparkle is particle rendering boilerplate written in JavaScript to draw particles on a canvas object. It provides general handling for particles and particle behavior you can extend and modify by overwriting certain functions.
 
 It is a result of some experiments with canvas during the JavaScriptDays2012 in Munich (http://javascript-days.de/). 
 
@@ -113,7 +113,7 @@ Call these values before you fire the emitter to position and point the emitter.
 
 #### Setting particle attributes
 
-There are diffrent ways to set a particles size, speed and lifetime. The simplest way is to use the setParticle* functions.
+There are different ways to set a particles size, speed and lifetime. The simplest way is to use the setParticle* functions.
 
 * setParticleSize(default,max)
 * setParticleSpeed(default,max)
@@ -140,7 +140,7 @@ By overwriting this function you can modify how the velocity is calculated and m
 
 #### modifyParticle()
 
-`modifyParticle()` is called each time before `renderParticle()`. It moves the particle based on the velocity, applies gravity, checks if the particle is new or dieing and fades it in and out by changeing `particle.opacity`.
+`modifyParticle()` is called each time before `renderParticle()`. It moves the particle based on the velocity, applies gravity, checks if the particle is new or dying and fades it in and out by changing `particle.opacity`.
 
 If you want to implement collision detection, special movements (e.g. rotation), more accurate gravity etc. here would be the right place.
 
